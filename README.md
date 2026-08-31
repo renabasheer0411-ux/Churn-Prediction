@@ -33,10 +33,9 @@ Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic 
 
 ## Project Structure
 
-
 churn-prediction/
 ├── data/
-│   └── telco_churn.csv
+│   └── telco_churn.csv 
 
 ## Tech Stack
 
