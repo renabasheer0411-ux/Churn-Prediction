@@ -65,10 +65,9 @@ Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic 
 
 ## Usage
 
-1. **Run the Pipeline:**
-   * Install dependencies: `pip install -r requirements.txt`
-   * Run the script: `python churn_prediction.py`
-   * The dataset is already included at `data/telco_churn.csv`, so no extra setup is needed.
+1. **Run the Notebook**:
+   - Open `Churn Prediction.ipynb` in Google Colab.
+   - Ensure that the dataset is available on Google Drive or within the local environment.
 2. **Explore Outputs:**
 3. **Reuse the Model:**
    
