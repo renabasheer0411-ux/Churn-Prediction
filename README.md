@@ -68,8 +68,8 @@ Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic 
 1. **Run the Notebook**:
    - Open `Churn Prediction.ipynb` in Google Colab.
    - Ensure that the dataset is available on Google Drive or within the local environment.
-2. **Explore Outputs:**
-3. **Reuse the Model:**
+2. **Explore Outputs**
+3. **Reuse the Model**
    
 
 ## Technologies Used
@@ -86,7 +86,7 @@ No deep learning framework or cloud infra is used — this is a classical ML pip
 
 * **Predictive Modeling:** Apply hyperparameter tuning and SHAP-based interpretability to sharpen churn predictions and explain individual results.
 * **Advanced Visualization:** Build dynamic dashboards in Tableau or Power BI for real-time churn monitoring.
-* **Deep Dive into Customer-Segment Analysis:** Explore churn patterns at the individual customer-segment level (e.g., by contract type, tenure band, or service bundle) rather than only in aggregate.
+* **Deep Dive into Customer-Segment Analysis:** Explore churn patterns at the individual customer-segment level rather than only in aggregate.
 * **Deployment:** Wrap the trained model in a simple Streamlit or Flask app to serve live churn predictions.
 * **Cost-Based Threshold Tuning:** Move off the default 0.5 classification threshold and optimize it against real retention-offer cost vs. customer lifetime value.
 
