@@ -13,11 +13,36 @@ Customer acquisition costs far more than retention. This project identifies cust
 
 ## Approach
 
-1. **Cleaning** — handled missing `TotalCharges` values (blank strings for customers with 0 tenure), encoded the target and binary fields.
-2. **EDA** — churn rate overall and by contract type/tenure to sanity-check assumptions before modeling.
-3. **Feature engineering** — one-hot encoded categoricals, added an `AvgMonthlySpend` derived feature, standardized numeric features.
-4. **Modeling** — trained and compared three classifiers: Logistic Regression, Random Forest, and Gradient Boosting, all with class balancing (churn is ~26.5% of the dataset — imbalanced).
-5. **Evaluation** — compared models on accuracy, precision, recall, F1, and ROC-AUC, since accuracy alone is misleading on imbalanced data. Selected the best model by ROC-AUC.
+### 1. Data Cleaning
+- `TotalCharges` arrives as a string column and contains 11 blank entries — these turn out to be customers with `tenure == 0` (brand-new accounts that haven't been billed yet), not random noise. Coerced to numeric with `pd.to_numeric(errors="coerce")` and imputed with the column median rather than dropping the rows, since 11 rows is small but every row of a minority-class-heavy dataset is worth keeping.
+- Dropped `customerID` — a unique identifier carries no predictive signal and risks the model latching onto it as a spurious feature.
+- Encoded the target (`Churn`: Yes/No → 1/0) and `SeniorCitizen` to a consistent integer type early, before any downstream split, so train/test encoding never drifts apart.
+
+### 2. Exploratory Data Analysis
+Before touching any model, the EDA step exists to sanity-check assumptions and catch anything that would silently break the pipeline:
+- **Class balance** — churn sits at ~26.5% of customers. This single number drives several later decisions: using `class_weight="balanced"` in the linear/tree models, and picking ROC-AUC/recall over raw accuracy as the metrics that matter.
+- **Churn by contract type** — month-to-month customers churn at a dramatically higher rate than one- or two-year contracts, which matches the business intuition that lock-in reduces churn and confirms `Contract` is a genuinely useful feature, not noise.
+- **Tenure distribution by churn status** — churned customers cluster heavily at low tenure (leave early or not at all), which flagged `tenure` as one of the strongest signals well before any model confirmed it via feature importance.
+- Both plots are saved to `outputs/eda_overview.png` so the reasoning is visible, not just asserted.
+
+### 3. Feature Engineering
+- Binary Yes/No columns (`Partner`, `Dependents`, `PhoneService`, `PaperlessBilling`) mapped to 0/1 rather than one-hot encoded, since one-hot on a true binary just doubles columns for no benefit.
+- Remaining categoricals (`Contract`, `PaymentMethod`, `InternetService`, the six service add-ons, etc.) one-hot encoded with `drop_first=True` to avoid the dummy-variable trap.
+- Added one derived feature, `AvgMonthlySpend = TotalCharges / tenure`, to capture spending intensity independent of how long someone's been a customer — two customers with the same `TotalCharges` but very different tenures are in very different situations, and the raw columns alone don't express that.
+- Standardized all numeric features with `StandardScaler` — necessary for Logistic Regression to converge properly and to keep coefficients comparable; harmless for the tree-based models.
+- Split 80/20 with `stratify=y` so the ~26.5% churn rate is preserved in both train and test sets — an unstratified split risks a test set that under- or over-represents churners purely by chance.
+
+
+### 4. Modeling
+Trained three classifiers spanning different modeling assumptions, all with `class_weight="balanced"` (or default balancing where applicable) since the 3:1 class imbalance would otherwise bias every model toward predicting "no churn":
+- **Logistic Regression** — a strong, interpretable baseline; coefficients are directly readable as churn drivers, which matters when the eventual audience is a retention team, not just a leaderboard.
+- **Random Forest** — captures non-linear interactions (e.g., fiber-optic internet *combined with* no tech support) that logistic regression can't.
+- **Gradient Boosting** — typically squeezes out extra performance by correcting prior trees' errors sequentially; included as the higher-capacity comparison point.
+
+### 5. Evaluation
+- Reported accuracy, precision, recall, F1, and ROC-AUC for every model — accuracy alone is misleading here, since a model that always predicts "no churn" would still score ~74% accuracy while being useless.
+- Prioritized **ROC-AUC and recall** for model selection: in a retention use case, missing an actual churner (false negative) costs a lost customer, while flagging a loyal customer for a retention offer (false positive) mostly just costs a discount coupon. That asymmetry is why Logistic Regression's higher recall (0.78) won out over Gradient Boosting's higher precision (0.67) despite both tying on ROC-AUC.
+- Generated a confusion matrix and ROC curve for the selected model, plus a feature-importance plot (for the tree-based models) to make the "why" behind predictions inspectable rather than a black box.
 
 ## Results
 
