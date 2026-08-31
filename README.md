@@ -61,9 +61,15 @@ Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic 
 ├── Churn Prediction.ipynb        
 ├── telco_churn.csv 
 
-## Tech Stack
+## Technologies Used
 
-Python, pandas, scikit-learn, matplotlib, seaborn
+* **Python:** Data cleaning, feature engineering, and model building with Pandas and scikit-learn.
+* **Jupyter/Google Colab:** Environment for running the pipeline and generating visualizations.
+* **Power BI / Tableau:** For creating interactive dashboards (future step).
+* **Libraries:** Matplotlib, Seaborn for data visualization; scikit-learn for modeling and evaluation; joblib for model persistence.
+
+No deep learning framework or cloud infra is used — this is a classical ML pipeline deliberately kept to a stack that's fast to run, easy to read, and standard for tabular business data.
+
 
 ## Possible Extensions
 
