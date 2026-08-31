@@ -31,7 +31,9 @@ Customer acquisition costs far more than retention. This project identifies cust
 
 Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic internet without tech support/online security, and electronic-check payment method.
 
+## Project Structure
 
+```
 churn-prediction/
 ├── data/
 │   └── telco_churn.csv
