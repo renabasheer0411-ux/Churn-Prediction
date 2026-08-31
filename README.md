@@ -30,9 +30,8 @@ Customer acquisition costs far more than retention. This project identifies cust
 **Best model: Logistic Regression** (selected for highest ROC-AUC and recall — catching more true churners matters more than raw accuracy here, since a missed churner is a lost customer).
 
 Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic internet without tech support/online security, and electronic-check payment method.
-## Project Structure
 
-```
+
 churn-prediction/
 ├── data/
 │   └── telco_churn.csv
