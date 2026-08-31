@@ -61,6 +61,16 @@ Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic 
 ├── Churn Prediction.ipynb        
 ├── telco_churn.csv 
 
+## Usage
+
+1. **Run the Pipeline:**
+   * Install dependencies: `pip install -r requirements.txt`
+   * Run the script: `python churn_prediction.py`
+   * The dataset is already included at `data/telco_churn.csv`, so no extra setup is needed.
+2. **Explore Outputs:**
+3. **Reuse the Model:**
+   
+
 ## Technologies Used
 
 * **Python:** Data cleaning, feature engineering, and model building with Pandas and scikit-learn.
@@ -71,9 +81,11 @@ Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic 
 No deep learning framework or cloud infra is used — this is a classical ML pipeline deliberately kept to a stack that's fast to run, easy to read, and standard for tabular business data.
 
 
-## Possible Extensions
+## Future Enhancements
 
-- Hyperparameter tuning (GridSearchCV) for the Gradient Boosting model
-- SHAP values for more interpretable feature attribution
-- A simple Streamlit app to serve live predictions
-- Cost-based threshold tuning (weigh false negatives vs. false positives by actual retention-offer cost)
+* **Predictive Modeling:** Apply hyperparameter tuning and SHAP-based interpretability to sharpen churn predictions and explain individual results.
+* **Advanced Visualization:** Build dynamic dashboards in Tableau or Power BI for real-time churn monitoring.
+* **Deep Dive into Customer-Segment Analysis:** Explore churn patterns at the individual customer-segment level (e.g., by contract type, tenure band, or service bundle) rather than only in aggregate.
+* **Deployment:** Wrap the trained model in a simple Streamlit or Flask app to serve live churn predictions.
+* **Cost-Based Threshold Tuning:** Move off the default 0.5 classification threshold and optimize it against real retention-offer cost vs. customer lifetime value.
+
