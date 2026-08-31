@@ -11,6 +11,11 @@ Customer acquisition costs far more than retention. This project identifies cust
 - **Features:** demographics (gender, senior citizen, partner, dependents), account info (tenure, contract type, payment method), and services subscribed (internet, phone, streaming, tech support, etc.)
 - Included at `data/telco_churn.csv`
 
+## Project Structure
+
+├── Churn Prediction.ipynb        
+├── telco_churn.csv 
+
 ## Approach
 
 ### 1. Data Cleaning
@@ -56,10 +61,7 @@ Trained three classifiers spanning different modeling assumptions, all with `cla
 
 Key churn drivers identified: month-to-month contracts, low tenure, fiber-optic internet without tech support/online security, and electronic-check payment method.
 
-## Project Structure
 
-├── Churn Prediction.ipynb        
-├── telco_churn.csv 
 
 ## Usage
 
